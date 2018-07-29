@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	"io/ioutil"
 	"os"
 	"regexp"
 	"strconv"
@@ -12,6 +14,7 @@ var (
 	// here, %s should be remplaced with the desired quote theme
 	searchString  string         = "https://www.goodreads.com/quotes/search?q=%s&commit=Search"
 	defaultAmount int            = 10
+	defaultOutput string         = "quotes.json"
 	contentRegexp *regexp.Regexp = regexp.MustCompile("“(.+?)”")
 )
 
@@ -26,24 +29,29 @@ func (q *Quote) String() string {
 }
 
 func usage() {
-	fmt.Println("Usage: ./goquotes <theme> [amount]")
+	fmt.Println("Usage: ./goquotes <theme> [amount] [output]")
 	os.Exit(1)
 }
 
 func main() {
-	if len(os.Args) != 2 && len(os.Args) != 3 {
+	if len(os.Args) != 2 && len(os.Args) != 3 && len(os.Args) != 4 {
 		usage()
 	}
 
 	theme := os.Args[1]
 	var amount int = defaultAmount
+	var output string = defaultOutput
 	var err error
 
-	if len(os.Args) == 3 {
+	if len(os.Args) >= 3 {
 		amount, err = strconv.Atoi(os.Args[2])
 		if err != nil {
 			usage()
 		}
+	}
+
+	if len(os.Args) >= 4 {
+		output = os.Args[3]
 	}
 
 	var quotes []Quote
@@ -86,7 +94,22 @@ func main() {
 
 	fmt.Printf("Scrapped %d quotes.\n\n", len(quotes))
 
+	var quotesString []string
+
 	for _, quote := range quotes {
-		fmt.Print(quote.String())
+		//fmt.Print(quote.String())
+		quotesString = append(quotesString, quote.String())
+	}
+
+	toWrite, err := json.MarshalIndent(quotesString, "", "  ")
+	if err != nil {
+		fmt.Println("Can't marshall: " + err.Error())
+		os.Exit(1)
+	}
+
+	err = ioutil.WriteFile(output, toWrite, 0644)
+	if err != nil {
+		fmt.Println("Can't write to file: " + err.Error())
+		os.Exit(1)
 	}
 }
