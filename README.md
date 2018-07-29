@@ -1,6 +1,6 @@
 # Goquotes
 
-goquotes is a simple Go scraper, built on [colly](https://github.com/gocolly/colly).
+goquotes is a simple Go scraper aimed at scrapping super-ultra-duper lit quotes, built on [colly](https://github.com/gocolly/colly).
 
 ## Usage
 
