@@ -1,6 +1,6 @@
 # Goquotes
 
-goquotes is a simple Go scraper aimed at scrapping super-ultra-duper lit quotes, built on [colly](https://github.com/gocolly/colly).
+goquotes is a simple Go scraper aimed at scraping super-ultra-duper lit quotes, built on [colly](https://github.com/gocolly/colly).
 
 ## Usage
 
@@ -37,7 +37,7 @@ dra ClareCity of Ashes\n",
 
 ## Secret
 
-The quotes are scrapped from [goodreads](https://www.goodreads.com/quotes).
+The quotes are scraped from [goodreads](https://www.goodreads.com/quotes).
 
 ## LICENSE
 
