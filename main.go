@@ -92,7 +92,7 @@ func main() {
 	fmt.Println("Launching Scraper !")
 	c.Visit(fmt.Sprintf(searchString, theme))
 
-	fmt.Printf("Scrapped %d quotes.\n\n", len(quotes))
+	fmt.Printf("Scraped %d quotes.\n\n", len(quotes))
 
 	var quotesString []string
 
